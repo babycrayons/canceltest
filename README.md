@@ -1,1 +1,123 @@
-# canceltest
+[The Cancel Test.html](https://github.com/user-attachments/files/34295069/The.Cancel.Test.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Cancel Test: How Fast Would You Get Cancelled?</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9ecf1;--paper:#fff;--ink:#101319;--mute:#5b6472;--line:#d3d8e0;--hot:#e5233a;--hotink:#fff;--soft:#fde8ea;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0e1116;--paper:#171b22;--ink:#eef1f5;--mute:#98a2b1;--line:#2a313c;--hot:#ff4a5e;--hotink:#14060a;--soft:#3a1a20}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0e1116;--paper:#171b22;--ink:#eef1f5;--mute:#98a2b1;--line:#2a313c;--hot:#ff4a5e;--hotink:#14060a;--soft:#3a1a20}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Archivo,"Helvetica Neue",Arial,sans-serif;line-height:1.45}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+header{padding:36px 0 20px}
+h1{font-size:clamp(2.4rem,9vw,4.2rem);line-height:.92;margin:0 0 14px;font-weight:900;font-stretch:75%;letter-spacing:-.02em}
+header p{margin:0;color:var(--mute);max-width:52ch}
+.meter{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);color:var(--bg);padding:10px 0}
+.meter .wrap{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.meter b{font-size:1.9rem;font-weight:900;font-stretch:75%;font-variant-numeric:tabular-nums;min-width:2.2ch}
+.meter span{font-size:.9rem;opacity:.85}
+.bar{height:5px;background:rgba(128,128,128,.35)}
+.bar i{display:block;height:100%;width:0;background:var(--hot);transition:width .25s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--ink);z-index:10}
+h2{font-size:1.15rem;margin:30px 0 8px;font-weight:800}
+ul{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+li+li{border-top:1px solid var(--line)}
+label{display:flex;gap:12px;align-items:center;padding:13px 14px;cursor:pointer;min-height:48px}
+label:hover{background:var(--bg)}
+input{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--mute);border-radius:50%;margin:0;display:grid;place-content:center;cursor:pointer}
+input:checked{background:var(--hot);border-color:var(--hot)}
+input:checked::after{content:"✕";color:var(--hotink);font-size:13px;font-weight:900;line-height:1}
+input:focus-visible{outline:3px solid var(--hot);outline-offset:2px}
+label:has(input:checked){background:var(--soft)}
+.n{color:var(--mute);font-size:.8rem;width:2.4ch;flex:none;text-align:right;font-variant-numeric:tabular-nums}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 60px}
+button{font:inherit;font-weight:800;border:0;border-radius:999px;padding:14px 26px;cursor:pointer;background:var(--hot);color:var(--hotink);font-size:1.05rem}
+button.alt{background:transparent;color:var(--ink);border:2px solid var(--ink)}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+#res{display:none;background:var(--paper);border:2px solid var(--ink);border-radius:14px;padding:26px 22px;margin:30px 0 60px}
+#res.on{display:block}
+#res small{color:var(--mute)}
+#res h3{font-size:clamp(2rem,8vw,3rem);line-height:.95;font-weight:900;font-stretch:75%;margin:6px 0 12px}
+.stats{display:flex;gap:26px;flex-wrap:wrap;margin:16px 0;padding:14px 0;border-block:1px solid var(--line)}
+.stats div b{display:block;font-size:1.7rem;font-weight:900;font-stretch:75%}
+.tiers{margin:20px 0 0;font-size:.85rem;color:var(--mute)}
+.tiers div{padding:3px 0}
+.tiers .me{color:var(--ink);font-weight:800}
+footer{color:var(--mute);font-size:.8rem;padding-bottom:40px}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="meter" role="status" aria-live="polite"><div class="wrap"><b id="cnt">0</b><span id="eta">Check anything you’ve done, said, or believed. Time to cancellation: never.</span></div><div class="bar"><i id="bar"></i></div></div>
+<div class="wrap">
+<header>
+<h1>The Cancel Test</h1>
+<p>100 things the internet might never let you live down. Check every one that applies to you, then see how fast the mob would find you. Satire. Not a moral ranking, and your answers stay on your device.</p>
+</header>
+<main id="list"></main>
+<div class="actions"><button id="go">Get my cancellation time</button><button class="alt" id="reset" type="button">Clear all</button></div>
+<section id="res" aria-live="polite"></section>
+<footer>Made for fun. The politics items are deliberately two-sided: both “support” and “don’t support” count, because someone online will be mad either way.</footer>
+</div>
+<script>
+var S=[
+"Don’t recycle","Are vegan and tell people","Eat meat and tell people","Own a Tesla","Drive a giant pickup truck",
+"Say “pumpkin spice” without irony","Put pineapple on pizza","Put ketchup on a steak","Use plastic straws","Use a paper straw and lecture others about it",
+"Say “no offense, but…”","Wear Crocs in public","Post a gym selfie every day","Have a podcast","Start a sentence with “Actually,”",
+"Unironically like Minions memes","Wear a fedora","Never tip","Say “I’m not like other girls/guys”","Quote a motivational influencer"]],
+["Pop culture and the internet",[
+"Stan a pop star in the replies","Say the Barbie movie was overrated","Say a beloved classic film is overrated","Have a “problematic fave”","Defend a celebrity who just got exposed",
+"Unfollow a celebrity over one tweet","Like a celebrity’s post right before they got cancelled","Think reality TV is real","Binge true crime and joke about it","Joke about a recent tragedy",
+"Wear a Halloween costume people called appropriation","Quote-tweet someone just to mock them","Have an old post that has not aged well","Delete old posts in a panic","Post an “unpopular opinion” that is extremely popular",
+"Say AI art is real art","Say AI art is theft","Use AI for school or work and hide it","Listen to a controversial artist","Hate-watch a show for months",
+"Spoil a show on social media","Call a pop star “mid”","Wear a band shirt without knowing the songs","Mouth the N-word while singing along to a song","Laugh at a dark joke, then say “too soon”",
+"Reply “ratio” to someone","Post a tearful apology video","Block someone for disagreeing with you","Film a TikTok somewhere inappropriate","Pay for a verification badge"]],
+["Politics",[
+"Support Trump","Don’t support Trump","Voted for Harris","Voted for Trump","'I'm not into politics'",
+"Was upset when Charlie Kirk died","Say the R-slur","Anti-LGBT+","Have ever said: 'I have a black friend/partner/neighbor'","Say “both sides” about something","Put a political sign in your yard","Wear a MAGA hat",
+"Wear a political slogan shirt","Argued politics at Thanksgiving","Unfollowed someone over their politics","Think billionaires should be taxed more","Think taxes are too high","Quick to choose the most popular opinion on the internet",
+"Think immigration should be stricter","Think immigration should be more open","Support stricter gun laws","Support gun rights","Are pro-life",
+"Are pro-choice","Don’t trust the mainstream media","Trust the mainstream media","Publicly support Israel","Publicly support Palestine","Performatively support Palestine",
+"Think climate change is overblown","Post loudly that climate change is an emergency","Take a side on a war you couldn’t find on a map","Think cancel culture is out of control","Think cancel culture holds people accountable",
+"Say “OK boomer”","Call Gen Z lazy","Call millennials entitled","Hate a corporation but buy from it weekly","Boycott a brand",
+"Argue about pronouns online","Say “I don’t see color”","Say “I’m not political”","Tell someone to “just be happy”","Own a vape",
+"Cheated on a partner","Leaked a private message screenshot","Gatekeep a hobby","Said something at work that got screenshotted","Been the villain in a viral video",
+"Make fun of a stranger’s appearance online","Said something awful “as a joke”","Been called “main character energy”","Have a group chat that would end you if leaked","Been called out by name online"]]
+];
+var qn=0,P=[],h="";
+S.forEach(function(s,si){h+="<h2>"+s[0]+"</h2><ul>";s[1].forEach(function(q){qn++;if(si==2)P.push(qn);h+='<li><label><span class="n">'+qn+'</span><input type="checkbox" data-i="'+qn+'"><span>'+q+'</span></label></li>'});h+="</ul>"});
+var L=document.getElementById("list");L.innerHTML=h;
+var boxes=[].slice.call(L.querySelectorAll("input"));
+function fmt(n){if(!n)return "never";var m=720/n;if(m>=120)return Math.round(m/60)+" hours";if(m>=60)return "1 hour "+Math.round(m-60)+" min";if(m>=2)return Math.round(m)+" minutes";return Math.round(m*60)+" seconds"}
+function score(){var n=0,p=0;boxes.forEach(function(b){if(b.checked){n++;if(+b.dataset.i>=P[0]&&+b.dataset.i<=P[P.length-1])p++}});return[n,p]}
+function upd(){var r=score();cnt.textContent=r[0];bar.style.width=r[0]+"%";eta.textContent="Time to cancellation: "+fmt(r[0])+(r[0]?"":". Suspiciously clean.")}
+L.addEventListener("change",upd);
+var T=[
+["You’re Not This Pure","Checked nothing. Either you’re a saint, a bot, or you’re lying to the quiz. The internet has nothing on you, which is its own kind of suspicious."],
+["So Nice, Everyone Forgot About You","Picture this: a popular 2020 unproblematic influencer that can now barely hit 10k views. You are so painfully uncancellable that it's forgettable."],
+["Normal Person, Swerved Views","Your daily life is fine. The trouble is the opinions. Most of what you checked is political, so you'd have haters on either side no matter what."],
+["I Mean, I Guess We All Do It","A few mild sins that make you relatable. We can't all be modern-day saints; you’d get one angry TikTok, a day of discourse, and then everyone moves on to someone else."],
+["Ragebaiter","Half of the internet knows you provoke them for views; the other half...does not. And if you're being serious, some of your opinions should stay hidden...forever."],
+["Hated...But IDGAF!","Okay Azalea! Equivalent to: separate the art from the artist. Everyone has a take on you, and yet you're still making money. You're also probably funny which makes it harder to hate."],
+["You Could Be A Veteran And No One Would Applaud You","You could return from service and not one person would clap. You suck as a person and everyone secretly hates your presence, online and in real life. You'd have multiple hate posts includes ones from your friends."],
+["Hitler Reincarnated","You're either lying or as controversial as Shane Dawson."]];
+function tier(n,p){if(!n)return 0;if(n<=9)return 1;if(p>=10&&p>=n*.45&&n<=60)return 2;if(n<=24)return 3;if(n<=44)return 4;if(n<=64)return 5;if(n<=84)return 6;return 7}
+document.getElementById("go").onclick=function(){var r=score(),t=tier(r[0],r[1]),o="";
+o+="<small>Your result</small><h3>"+T[t][0]+"</h3><p>"+T[t][1]+"</p>";
+o+='<div class="stats"><div><b>'+r[0]+"/100</b>checked</div><div><b>"+fmt(r[0])+"</b>until cancelled</div><div><b>"+r[1]+"/25</b>political</div></div>";
+o+='<div class="tiers">';[0,1,2,3,4,5,6,7].forEach(function(i){o+='<div class="'+(i==t?"me":"")+'">'+(i==t?"▸ ":"")+T[i][0]+"</div>"});o+="</div>";
+o+='<div class="actions" style="margin:20px 0 0"><button id="cp" type="button">Copy my result</button></div>';
+res.innerHTML=o;res.className="on";res.scrollIntoView({behavior:"smooth",block:"start"});
+document.getElementById("cp").onclick=function(){var s="I got “"+T[t][0]+"” on The Cancel Test: "+r[0]+"/100, cancelled in "+fmt(r[0])+".";var b=this;try{navigator.clipboard.writeText(s).then(function(){b.textContent="Copied"})}catch(e){b.textContent=s}}};
+document.getElementById("reset").onclick=function(){boxes.forEach(function(b){b.checked=false});res.className="";upd();window.scrollTo({top:0,behavior:"smooth"})};
+var res=document.getElementById("res"),cnt=document.getElementById("cnt"),eta=document.getElementById("eta"),bar=document.getElementById("bar");
+upd();
+</script>
+</body>
+</html>
